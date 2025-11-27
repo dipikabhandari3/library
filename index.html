@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Library</title>
+    <style>
+        :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.4}
+        body{margin:0;padding:1rem;background:#f7f7fb;color:#111}
+        header{display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0}
+        h1{margin:.25rem 0}
+        .search{max-width:420px;width:100%}
+        input[type="search"]{width:100%;padding:.5rem .75rem;border:1px solid #d0d7de;border-radius:8px}
+        main{margin-top:1rem}
+        .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+        .card{background:#fff;border:1px solid #e6e9ef;border-radius:8px;padding:.75rem}
+        .title{font-weight:600;margin:0 0 .25rem 0}
+        .meta{font-size:.875rem;color:#586069}
+        footer{margin-top:1.25rem;font-size:.875rem;color:#586069}
+        @media (max-width:420px){header{flex-direction:column;align-items:flex-start}h1{font-size:1.25rem}}
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>My Library</h1>
+            <p class="meta">A small collection of books and resources</p>
+        </div>
+        <div class="search" style="position:relative"></div>
+            <label for="q" class="sr-only">Search</label>
+            <input id="q" type="search" placeholder="Search books by title or author" aria-label="Search books" />
+        </div>
+    </header>
+
+    <main>
+        <section aria-labelledby="collection">
+            <h2 id="collection" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Collection</h2>
+            <div id="books" class="grid">
+                <article class="card" data-title="Eloquent JavaScript" data-author="Marijn Haverbeke">
+                    <div class="title">Eloquent JavaScript</div>
+                    <div class="meta">Marijn Haverbeke — Programming</div>
+                </article>
+                <article class="card" data-title="You Don't Know JS" data-author="Kyle Simpson">
+                    <div class="title">You Don't Know JS</div>
+                    <div class="meta">Kyle Simpson — JavaScript</div>
+                </article>
+                <article class="card" data-title="HTML & CSS" data-author="Jon Duckett">
+                    <div class="title">HTML & CSS</div>
+                    <div class="meta">Jon Duckett — Web Design</div>
+                </article>
+                <article class="card" data-title="Designing Interfaces" data-author="Jenifer Tidwell">
+                    <div class="title">Designing Interfaces</div>
+                    <div class="meta">Jenifer Tidwell — UX</div>
+                </article>
+            </div>
+        </section>
+
+        <footer>
+            Tip: type in the search box to filter the list.
+        </footer>
+    </main>
+
+    <script>
+        const q = document.getElementById('q');
+        const cards = Array.from(document.querySelectorAll('#books .card'));
+        q.addEventListener('input', () => {
+            const term = q.value.trim().toLowerCase();
+            cards.forEach(card => {
+                const title = card.dataset.title.toLowerCase();
+                const author = card.dataset.author.toLowerCase();
+                card.style.display = (!term || title.includes(term) || author.includes(term)) ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
